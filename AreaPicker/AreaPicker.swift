@@ -18,8 +18,8 @@ class AreaPicker: UIPickerView,UIPickerViewDataSource,UIPickerViewDelegate {
         super.init(frame: frame)
         self.delegate = self
         self.dataSource = self
-        let pathURL = NSBundle.mainBundle().URLForResource("area", withExtension: "plist")
-        provinces = NSArray(contentsOfURL: pathURL!)
+        let pathURL = Bundle.main.url(forResource: "area", withExtension: "plist")
+        provinces = NSArray(contentsOf: pathURL!)
         cities = [["北京市":123]]
         districts = ["东城区"]
     }
@@ -32,11 +32,11 @@ class AreaPicker: UIPickerView,UIPickerViewDataSource,UIPickerViewDelegate {
     var districts:NSArray = []
     
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component{
         case 0: return provinces.count
         case 1: return cities.count
@@ -46,7 +46,7 @@ class AreaPicker: UIPickerView,UIPickerViewDataSource,UIPickerViewDelegate {
         
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component{
         case 0:
             province = provinces[row] as! NSDictionary
@@ -66,7 +66,7 @@ class AreaPicker: UIPickerView,UIPickerViewDataSource,UIPickerViewDelegate {
     }
     
 
-    func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         switch component{
             
         case 0: return pickerView.frame.width*3/7
@@ -76,7 +76,7 @@ class AreaPicker: UIPickerView,UIPickerViewDataSource,UIPickerViewDelegate {
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0{
             //更改城市和区的数据源
             province = provinces[row] as! NSDictionary
@@ -104,17 +104,17 @@ class AreaPicker: UIPickerView,UIPickerViewDataSource,UIPickerViewDelegate {
     }
 
     func getArea()->(province:String,city:String,disricts:String){
-        let shengrow = self.selectedRowInComponent(0)
+        let shengrow = self.selectedRow(inComponent: 0)
         let sheng = provinces[shengrow] as! NSDictionary
         for(key,_) in sheng{
             area.province = key as! String
         }
-        let shirow = self.selectedRowInComponent(1)
+        let shirow = self.selectedRow(inComponent: 1)
         let shi = cities[shirow] as! NSDictionary
         for(key,_) in shi{
             area.city = key as! String
         }
-        let qurow = self.selectedRowInComponent(2)
+        let qurow = self.selectedRow(inComponent: 2)
         area.disricts = districts[qurow] as! String
         return area
     }

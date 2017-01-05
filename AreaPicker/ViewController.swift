@@ -13,13 +13,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        picker.frame = CGRectMake(0,0,200,400);
+        picker.frame = CGRect(x: 0,y: 0,width: 200,height: 400);
         picker.center = self.view.center
         self.view.addSubview(picker)
-        let button = UIButton(frame: CGRectMake(100,30,100,30))
+        let button = UIButton(frame: CGRect(x: 100,y: 30,width: 100,height: 30))
         button.titleLabel?.text = "昂昂昂"
-        button.backgroundColor = .grayColor()
-        button.addTarget(self, action: "get", forControlEvents: .TouchUpInside)
+        button.backgroundColor = .gray
+        button.addTarget(self, action: #selector(ViewController.get), for: .touchUpInside)
         print(button.frame)
         self.view.addSubview(button)
     }
